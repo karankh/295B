@@ -290,4 +290,45 @@ public class UserDAOImpl implements UserDAO {
 	            
 	        }
 }
+			
+			
+			/*
+			 * This method retrieves  the record of user from db
+			 * */
+			public UserPageModel getUserByEmailId(UserPageModel userPageModel){
+				System.out.println("I m in getUserByEmailId method");
+				String SQL = "SELECT * FROM cuser_details WHERE email = '"+userPageModel.getEmail()+"';";
+		       
+		        Statement stmt;
+		        try
+		        {
+		            stmt = ConnectionDAO.getStatement();
+		            ResultSet rs = stmt.executeQuery(SQL);
+		            if (null!= rs && rs.next())
+		            {
+		            	System.out.println("user firstname is: " + rs.getString("firstname"));
+		            	userPageModel.setFirstname(rs.getString("firstname"));
+		            	userPageModel.setLastname(rs.getString("lastname"));
+		            	userPageModel.setEmail(rs.getString("email"));
+		            	userPageModel.setPasswrd(rs.getString("passwrd"));
+		            	userPageModel.setId(rs.getInt("userid")+"");
+		            	userPageModel.setIsUserPresent(true);
+		            
+		                return userPageModel;
+		            }
+		            else
+		            {
+		            	
+		            	userPageModel.setIsUserPresent(false);
+		                return userPageModel;
+		            }
+		        }
+		        catch (SQLException e)
+		        {
+		            System.out.println("SQL Exception : "+e.getMessage());
+		            
+		            return null;
+		        }
+				
+			}
 }

@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.apache.log4j.Logger;
 import org.apache.tomcat.util.codec.binary.Base64;
 //import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,13 +87,17 @@ public class ImageController {
 	 
 	private String imagePath = "/WEB-INF/images";
     
-
+	private static final Logger logr = Logger.getLogger(ImageController.class); 
+	
      @RequestMapping(value = "/uploadImageN",method = RequestMethod.GET)
      public String uploadImageN(HttpServletRequest request,  HttpServletResponse response,@RequestParam(value = "error", required = false, defaultValue = "false") String error,
     		 ModelMap map) 
      {
     	 System.out.println("in uploadImageN");
-    	 
+    	 if(logr.isDebugEnabled()){
+             logr.debug("/uploadImageN GET method is executed!");
+             
+    }
     	 String msg=null;
     	 if(!(error.equalsIgnoreCase("false"))) {
     		 msg=error;
@@ -122,6 +127,10 @@ public class ImageController {
      @RequestMapping(value = { "/uploadImageN" }, method = RequestMethod.POST)
  	public String uploadImage(@Valid SimpleUploadFile fileBucket, BindingResult result, ModelMap model) 
  			throws IOException{
+    	 if(logr.isDebugEnabled()){
+             logr.debug("/uploadImageN POST method is executed!");
+             
+    }
     	 
     	 if(!(sessionService.isUserLoggedIN())){
  			return "redirect:/login?error=You need to login Again ! Some UserId problem.";
@@ -176,6 +185,10 @@ public class ImageController {
      public ModelAndView viewImageN(HttpServletRequest request,  HttpServletResponse response,@RequestParam(value = "error", required = false, defaultValue = "false") String error,
     		 ModelMap map,@PathVariable String docId) 
      {
+    	 if(logr.isDebugEnabled()){
+             logr.debug("/viewImageN-{docId} GET method is executed!");
+             
+    }
     	 System.out.println("in upload image N GET");
     	 System.out.println("input doc id is::"+docId);
     	 
@@ -221,6 +234,11 @@ public class ImageController {
      public ModelAndView viewAllImage(HttpServletRequest request,  HttpServletResponse response,@RequestParam(value = "error", required = false, defaultValue = "false") String error,
     		 ModelMap map) 
      {
+    	 
+    	 if(logr.isDebugEnabled()){
+             logr.debug("/listdocs GET method is executed!");
+             
+    }
     	 int i =0;
     	 List<String> li =new ArrayList<String>();
     	 //imagerepresentation
@@ -265,6 +283,11 @@ public class ImageController {
      public ModelAndView searchImages(HttpServletRequest request,  HttpServletResponse response,@RequestParam(value = "error", required = false, defaultValue = "false") String error,
     		 @RequestParam(value = "text", required = false, defaultValue = "false") String text,ModelMap map) 
      {
+    	 if(logr.isDebugEnabled()){
+             logr.debug("/searchImages GET method is executed!");
+             
+    }
+    	 
     	 System.out.println("In /searchImages ");
     	 
     	 

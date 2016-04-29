@@ -19,4 +19,5 @@ public interface UserRecordService {
 	public int updateUser(UserPageModel userPageModel);
 	public boolean isUserThere(SignUpPageModel signUpPageModel);
 	public UserPageModel isUserPresentById(UserPageModel userPageModel);
+	public UserPageModel getUserByEmailId(UserPageModel userPageModel);
 }

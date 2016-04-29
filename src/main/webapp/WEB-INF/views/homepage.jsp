@@ -116,7 +116,7 @@
          
       <c:when test="${isUserlogin=='true'}">
       <label>Hello,
-      <%= session.getAttribute("USERNAME") %></label>
+      <%= session.getAttribute("USERFIRSTNAME") %></label>
       <b><a href='${pageContext.request.contextPath}/uploadImageN' >ImageUpload</a></b>
       <b><a href="${pageContext.request.contextPath}/logout">LogOut</a></b>
       </c:when>

@@ -44,5 +44,10 @@ public class UserRecordServiceImpl implements UserRecordService {
 	public UserPageModel isUserPresentById(UserPageModel userPageModel) {
 		return userDAO.isUserPresentById(userPageModel);
 	}
+
+	@Override
+	public UserPageModel getUserByEmailId(UserPageModel userPageModel) {
+		return userDAO.getUserByEmailId(userPageModel);
+	}
  
 }

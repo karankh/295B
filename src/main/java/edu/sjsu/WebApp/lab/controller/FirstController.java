@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 //import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,7 +34,7 @@ import edu.sjsu.WebApp.labservices.UserRecordService;
 @Controller
 public class FirstController {
  
-    
+	private static final Logger logr = Logger.getLogger(FirstController.class); 
     
     @Autowired 
     private UserRecordService userRecordService;
@@ -71,6 +72,9 @@ public class FirstController {
     public ModelAndView initRR(@RequestParam(value = "error", required = false, defaultValue = "false") String error) {
     	homepageModel = new HomePageModel();
  
+    	if(logr.isDebugEnabled()){
+            logr.debug("get UserHomePage method is executed!"); }
+    	
     	String msg=null;
     	if(!error.equalsIgnoreCase("false")) {
     		System.out.println("in homepage get the error is :"+error);
@@ -96,8 +100,12 @@ public class FirstController {
     }
     
     @RequestMapping(value = "/homepage",method = RequestMethod.POST)
-    public String init(@ModelAttribute("homepageDetails")HomePageModel homepageModel,@RequestParam(value = "error", required = false, defaultValue = "false") String error) {
+    public String init(@ModelAttribute("homepageDetails")HomePageModel homepageModel,@RequestParam(value = "error", required = false, defaultValue = "false") String error,
+    		HttpServletRequest request,  HttpServletResponse response) {
     	
+    	
+    	if(logr.isDebugEnabled()){
+            logr.debug("POST UserHomePage method is executed!"); } 
     	String msg=null;
     	if(!error.equalsIgnoreCase("false")) {
     		System.out.println("in homepage get the error is :"+error);
@@ -119,22 +127,28 @@ public class FirstController {
        
     }
     
-    //homepage shows searchbox and images -- its post pending.
-    
+   
     
     /**
      * This method will load the signup.jsp page when the /registration requested.
      */
     @RequestMapping(value = "/signUp",method = RequestMethod.GET)
-    public ModelAndView initr(@RequestParam(value = "error", required = false, defaultValue = "false") String error) {
+    public ModelAndView initr(@RequestParam(value = "error", required = false, defaultValue = "false") String error,
+    		HttpServletRequest request,  HttpServletResponse response) {
     	signUpPageModel = new SignUpPageModel();
+    	
+    	if(logr.isDebugEnabled()){
+            logr.debug("GET SIGNUP method is executed!"); }
     	
     	String msg=null;
     	if(!error.equalsIgnoreCase("false")) {
     		System.out.println("in signup get the error is :"+error);
     		msg=error;
     	}
-		
+    	response.setHeader(
+    	        "Cache-Control",
+    	        "no-cache, max-age=0, must-revalidate, no-store");
+    	
     	ModelAndView model = new ModelAndView("registration");
       	 model.addObject("registrationDetails", signUpPageModel);
       	 model.addObject("Message", msg);
@@ -160,6 +174,10 @@ public class FirstController {
     public String login(@ModelAttribute("registrationDetails")SignUpPageModel signUpPageModel1, BindingResult bindingResult, 
             HttpServletRequest request,  HttpServletResponse response) 
     {
+    	
+    	if(logr.isDebugEnabled()){
+            logr.debug("POST SIGNUP method is executed!"); } 
+    	
         try 
         {
         	String msg=null;
@@ -195,10 +213,7 @@ public class FirstController {
             	
             	
             	return "redirect:/userpage/"+userpageModel.getId()+"/?brief=true&mode=newuser";
-//            	ModelAndView model = new ModelAndView("userpage");
-//            	model.addObject("userpageDetails", signUpPageModel1);
-//           	 	model.addObject("Message", msg);
-//           	 	return model;
+//            
 //           	 	
           }
         } catch (Exception e) {
@@ -217,6 +232,11 @@ public class FirstController {
     @RequestMapping(value = "/userpage/{userId}",method = RequestMethod.GET)
     public ModelAndView init(@PathVariable("userId") String id,@RequestParam(value = "brief", required = false, defaultValue = "false") String nojsoncheck,
     		@RequestParam(value = "mode", required = false, defaultValue = "notnew") String mode){
+    	
+    	
+    	if(logr.isDebugEnabled()){
+            logr.debug("get /userpage/{userId} method is executed!"); }
+    	
     	
     	String msg=null;
     	if(!mode.equalsIgnoreCase("newuser")) {
@@ -268,7 +288,8 @@ public class FirstController {
      * Internal method to convert java object to json object using object mapper.
      * */
     	public ModelAndView  useJson(UserPageModel userpageModel) {
-    		
+    		if(logr.isDebugEnabled()){
+                logr.debug("get useJson method is executed!"); }	
             System.out.println("in  json conversion method" + userpageModel.getFirstname());
             ObjectMapper obk = new ObjectMapper();
             String message = null;
@@ -307,6 +328,8 @@ public class FirstController {
     	
     	
 		System.out.println("userpage model before sql-"+userpageModel.getLastname());
+		if(logr.isDebugEnabled()){
+            logr.debug("POST /userpage/{userId} update method is executed!"); }	
 		
          ValidationUtils.rejectIfEmptyOrWhitespace(bindingResult,"firstname","firstname", "firstname not be empty");
          
@@ -372,6 +395,10 @@ public class FirstController {
     	
     	System.out.println("REST POST FOR USER... SEE this code ");
     	
+    	if(logr.isDebugEnabled()){
+            logr.debug("REST POST /userpage/{userId} update method is executed!"); }	
+		
+    	
 		 UserPageModel userpageModel11 = new UserPageModel();
 		 signUpPageModel= new SignUpPageModel();
 		 String msg=null;
@@ -428,7 +455,9 @@ public class FirstController {
             HttpServletRequest request,  HttpServletResponse response,@PathVariable("userId") String id,@RequestParam(value = "brief", required = false, defaultValue = "false") String jsoncheck){
     
     	System.out.println("in normal del");
-
+    	if(logr.isDebugEnabled()){
+            logr.debug("POST /userpage/{userId} Delete method is executed!"); }	
+		
     	userpageModel.setId(id);
     	userRecordService.isUserPresentById(userpageModel);
      	if(!userpageModel.getIsUserPresent())
@@ -447,8 +476,7 @@ public class FirstController {
         }
 		return null;
 
-		//userpage/userpage/5 TO DO
-         
+	
         
     }
     
@@ -460,6 +488,9 @@ public class FirstController {
      * */    
     @RequestMapping(value = "/userpage/{userId}",method = RequestMethod.DELETE)
     public ModelAndView initD(@PathVariable("userId") String id){
+    	if(logr.isDebugEnabled()){
+            logr.debug("REST DELETE /userpage/{userId} delete method is executed!"); }	
+		
     	
     	System.out.println("in abnormal del");
     	String message=null;
