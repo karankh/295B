@@ -383,7 +383,7 @@ public class UserImageDAOImpl implements UserImageDAO {
 			public List<UserImage> getAllImages() {
 				System.out.println("I m in getAllImages method");
 				String SQL = "SELECT * FROM cimages_details;";
-				
+				boolean  flag=false;
 		        Statement stmt;
 		        
 		        List<UserImage> liUserImages = new ArrayList<UserImage>();
@@ -402,10 +402,17 @@ public class UserImageDAOImpl implements UserImageDAO {
 		            	userimage.setImageid(rs.getInt("imageid")+"");
 		            
 		            	liUserImages.add(userimage);
-		            	
+		            	  if(!flag) {
+		            		  flag=true;
+				            	
+			            	}
 		                
 		            }
 		            
+		            if(!flag) {
+		            	liUserImages.add(null);
+		            	
+	            	}
 		            return liUserImages;
 		           
 		        }
@@ -444,7 +451,7 @@ public class UserImageDAOImpl implements UserImageDAO {
 			public List<UserImage> getAllImagesByUserId(String userId) {
 				System.out.println("I m in getAllImagesByUserId method");
 				String SQL = "SELECT * FROM cimages_details WHERE userid = '"+userId+"';";
-				
+				boolean flag=false;
 		        Statement stmt;
 		        List<UserImage> liUserImages = new ArrayList<UserImage>();
 		        try
@@ -461,10 +468,17 @@ public class UserImageDAOImpl implements UserImageDAO {
 		            	userimage.setImageid(rs.getInt("imageid")+"");
 		            
 		            	liUserImages.add(userimage);
+		            	if(!flag) {
+		            		flag=true;
+		            	}
 		            	
 		                
 		            }
 		            
+		            if(!flag) {
+		            	liUserImages.add(null);
+		            	
+	            	}
 		            return liUserImages;
 		           
 		        }
@@ -480,7 +494,7 @@ public class UserImageDAOImpl implements UserImageDAO {
 			public List<UserImage> searchImagesByText(String text) {
 				System.out.println("I m in searchImagesByText method");
 				String SQL = "SELECT * FROM cloudAppdb.cimages_details WHERE imagedesc LIKE '%"+text+"%' or imagename LIKE '%"+text+"%' ;";
-				
+				boolean flag=false;
 		        Statement stmt;
 		        List<UserImage> liUserImages = new ArrayList<UserImage>();
 		        try
@@ -497,10 +511,17 @@ public class UserImageDAOImpl implements UserImageDAO {
 		            	userimage.setImageid(rs.getInt("imageid")+"");
 		            
 		            	liUserImages.add(userimage);
+		            	if(!flag) {
+		            		flag=true;
+		            	}
 		            	
 		                
 		            }
 		            
+		            if(!flag) {
+		            	liUserImages.add(null);
+		            	
+	            	}
 		            return liUserImages;
 		           
 		        }

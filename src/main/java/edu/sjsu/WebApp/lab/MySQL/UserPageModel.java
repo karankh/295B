@@ -26,7 +26,24 @@ public class UserPageModel {
     private String passwrd;
     
 
+    private Boolean isUserlogin=false;
    
+	public Boolean getIsUserlogin() {
+		return isUserlogin;
+	}
+
+
+
+
+
+	public void setIsUserlogin(Boolean isUserlogin) {
+		this.isUserlogin = isUserlogin;
+	}
+
+
+
+
+
 	public String getId() {
 		return id;
 	}

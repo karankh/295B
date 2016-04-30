@@ -16,7 +16,7 @@
                 <td colspan="3" align="center"><font color="red"><form:errors /></font></td>
             </tr>
         </table>
-         <a href='${pageContext.request.contextPath}/uploadImageN' >Upload Pics</a>
+        <label>REquested page doesn't exist.</label>
          <a href='${pageContext.request.contextPath}/homepage' >App HomePage</a>
     </form:form>
 </body>

@@ -117,8 +117,10 @@
       <c:when test="${isUserlogin=='true'}">
       <label>Hello,
       <%= session.getAttribute("USERFIRSTNAME") %></label>
-      <b><a href='${pageContext.request.contextPath}/uploadImageN' >ImageUpload</a></b>
-      <b><a href="${pageContext.request.contextPath}/logout">LogOut</a></b>
+      <b><a href='${pageContext.request.contextPath}/uploadImageN' >ImageUpload</a></b><br/>
+      <b><a href="${pageContext.request.contextPath}/logout">LogOut</a></b><br/>
+      <b><a href='${pageContext.request.contextPath}/userpage/<%= session.getAttribute("USERID") %>/?brief=true' >View Your Account</a></b><br/>
+      
       </c:when>
 
       <c:otherwise>

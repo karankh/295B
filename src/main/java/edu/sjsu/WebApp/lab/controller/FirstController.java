@@ -210,7 +210,7 @@ public class FirstController {
             	userpageModel.setEmail(signUpPageModel1.getEmail());
             	userpageModel.setFirstname(signUpPageModel1.getFirstname());
             	userpageModel.setLastname(signUpPageModel1.getLastname());
-            	
+            	userpageModel.setIsUserlogin(false);
             	
             	return "redirect:/userpage/"+userpageModel.getId()+"/?brief=true&mode=newuser";
 //            
@@ -255,10 +255,18 @@ public class FirstController {
     	}
     	
     	
-	    
     	userpageModel.setId(id);
     	userpageModel=userRecordService.getUser(userpageModel);
-	       
+    	httpSession = sessionService.getHttpSession();
+    	
+    	if(sessionService.isUserLoggedIN()){
+    		if(httpSession.getAttribute("USERID")!=null) {
+    			System.out.println("user page session id-- "+httpSession.getAttribute("USERID"));
+        		System.out.println("setting userpage isUserLogin true");
+        		userpageModel.setIsUserlogin(true);
+        	}
+    		
+    	}   
 	       // if user doesn't exist, then redirect to error page
 	       if(!userpageModel.getIsUserPresent())
 	       {
@@ -293,6 +301,7 @@ public class FirstController {
             System.out.println("in  json conversion method" + userpageModel.getFirstname());
             ObjectMapper obk = new ObjectMapper();
             String message = null;
+            
       			
 			//sending JSon data withing Html pre tag
 			try {

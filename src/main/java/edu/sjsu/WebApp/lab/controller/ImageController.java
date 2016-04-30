@@ -330,5 +330,63 @@ public class ImageController {
 }
      
      
+     @RequestMapping(value = "/searchImagesByUser",method = RequestMethod.GET)
+     public ModelAndView searchImagesByUser(HttpServletRequest request,  HttpServletResponse response,@RequestParam(value = "error", required = false, defaultValue = "false") String error,
+    		 @RequestParam(value = "text", required = false, defaultValue = "false") String text,ModelMap map) 
+     {
+    	 if(logr.isDebugEnabled()){
+             logr.debug("/searchImages GET method is executed!");
+             
+    }
+    	 String userid="";
+    	 
+    	 System.out.println("In /searchImagesByUser ");
+    	 
+    		if(sessionService.isUserLoggedIN()){
+        		if(httpSession.getAttribute("USERID")!=null) {
+        			System.out.println("In searchImagesByUser, session's userid is -- "+httpSession.getAttribute("USERID"));
+        			userid=httpSession.getAttribute("USERID")+"";
+            	}
+        		
+        	}
+    	 int i =0;
+    	 List<String> li =new ArrayList<String>();
+    	 //imagerepresentation
+    	 List<UserImage> liUserImages = userImageService.getAllImagesByUserId(userid);
+    	 //handle error msg here Pending if(liUserImages.get(0)!=null )
+    	 if(liUserImages.get(0)!=null ) {
+    	 while(i<liUserImages.size())  {
+    		 byte[] encodeBase64 = Base64.encodeBase64(liUserImages.get(i).getContent());
+    		 try {
+    				String base64Encoded = new String(encodeBase64, "UTF-8");
+    				li.add(base64Encoded);
+    				liUserImages.get(i).setImagerepresentation(base64Encoded);
+    			} catch (UnsupportedEncodingException e) {
+    				
+    				e.printStackTrace();
+    				ModelAndView model = new ModelAndView("error");
+    	        	 model.addObject("Message", "Operation failed");
+    	        	 
+    	        	 return model;
+    			}
+    		 i++;
+    	 }
+    		 
+    	
+     	  ModelAndView model = new ModelAndView("showImages");
+        	 model.addObject("userImages", liUserImages);
+        	 
+        	 return model;
+      
+     
+ }
+    	 ModelAndView model = new ModelAndView("ImageError");
+    	 model.addObject("msg", "operation /searchImagesByUserId returned 0 Images !!!!");
+     	 
+     	 return model;
+    
+}
+     
+     
      
 }

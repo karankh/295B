@@ -43,7 +43,7 @@ function validateForm()
             </tr>
             <tr>
                 <td><label>Password</label></td>
-                <td><form:input path="passwrd" ></form:input></td>
+                <td><form:input path="passwrd" type="password" ></form:input></td>
                
             </tr>
                 <tr>

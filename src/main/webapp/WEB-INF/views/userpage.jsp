@@ -35,7 +35,16 @@
                 
             </tr>
            
+          
             <tr>
+                <td colspan="3" align="center"><font color="red"><form:errors /></font></td>
+            </tr>
+       
+         <c:set var="isUserlogin" scope="session" value="${userpageDetails.isUserlogin}"/>
+         <c:choose>
+         
+         <c:when test="${isUserlogin=='true'}">
+        <tr>
                <td colspan="2" align="center"><input type="submit" name="update"
                     value="Update" /></td>
                     
@@ -43,18 +52,25 @@
                 
                 <td colspan="2" align="center"><input type="submit" name="delete"
                     value="Delete" /></td>
-                    
-                <td>
-            
-		</td>
+              
             </tr>
-            <tr>
-                <td colspan="3" align="center"><font color="red"><form:errors /></font></td>
-            </tr>
-        </table>
-         <a href='${pageContext.request.contextPath}/uploadImageN' >Upload Pics</a>
-         <a href='${pageContext.request.contextPath}/homepage' >App HomePage</a>
-          <b><a href="${pageContext.request.contextPath}/logout">LogOut</a></b>
+      
+       <a href='${pageContext.request.contextPath}/uploadImageN' >Upload Pics</a><br/>
+         <a href='${pageContext.request.contextPath}/homepage' >App HomePage</a><br/>
+         <b><a href="${pageContext.request.contextPath}/logout">LogOut</a></b><br/>
+          <b><a href="${pageContext.request.contextPath}/searchImagesByUser">View Your Uploaded Pics</a></b><br/>
+      
+      <br />
+         </c:when>
+
+      <c:otherwise>
+      <b><a href='${pageContext.request.contextPath}/login' >SignIn</a></b>
+      <br />
+      </c:otherwise>
+      </c:choose>
+      
+        
+          </table>
     </form:form>
 </body>
 </html>

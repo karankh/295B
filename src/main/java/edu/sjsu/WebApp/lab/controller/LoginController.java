@@ -179,6 +179,15 @@ public class LoginController {
     	}
     	
     	
+    	
+    	
+    }
+    
+    @RequestMapping(value = "/*",method = RequestMethod.GET)
+    public String initError89() {
+    	// if user doesn't exist, then redirect to error page
+	          return "defaultPage";
+	      
     }
     
 }
