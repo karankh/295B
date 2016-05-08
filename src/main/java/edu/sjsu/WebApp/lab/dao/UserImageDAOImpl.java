@@ -327,7 +327,7 @@ public class UserImageDAOImpl implements UserImageDAO {
 		            				}
 		            		
 		            			userImage.setImageid(id+""); 
-		            			return 1;
+		            			return id;
 		            	}
 		            	
 		           
@@ -493,7 +493,7 @@ public class UserImageDAOImpl implements UserImageDAO {
 			@Override
 			public List<UserImage> searchImagesByText(String text) {
 				System.out.println("I m in searchImagesByText method");
-				String SQL = "SELECT * FROM cloudAppdb.cimages_details WHERE imagedesc LIKE '%"+text+"%' or imagename LIKE '%"+text+"%' ;";
+				String SQL = "SELECT * FROM cimages_details WHERE imagedesc LIKE '%"+text+"%' or imagename LIKE '%"+text+"%' ;";
 				boolean flag=false;
 		        Statement stmt;
 		        List<UserImage> liUserImages = new ArrayList<UserImage>();

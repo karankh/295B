@@ -71,10 +71,9 @@ public class LoginController {
    }
     	httpSession = sessionService.getHttpSession();
     	if(sessionService.isUserLoggedIN()){
-    		ModelAndView model = new ModelAndView("defaultPage");
-         	 model.addObject("Message", "Currently logged IN, try log out first from  homepage");
-         	 return model;
-    		
+    		ModelAndView model = new ModelAndView("alreadyLoggedIn");
+        	 model.addObject("Message", "Currently logged IN, try log out first from  homepage");
+        	 return model;
     		//logoutPage(request, response);
     	}
     	
@@ -183,7 +182,7 @@ public class LoginController {
     	
     }
     
-    @RequestMapping(value = "/*",method = RequestMethod.GET)
+    @RequestMapping(value = { "/*" },method = RequestMethod.GET)
     public String initError89() {
     	// if user doesn't exist, then redirect to error page
 	          return "defaultPage";

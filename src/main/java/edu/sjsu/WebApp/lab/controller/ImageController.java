@@ -91,7 +91,7 @@ public class ImageController {
 	
      @RequestMapping(value = "/uploadImageN",method = RequestMethod.GET)
      public String uploadImageN(HttpServletRequest request,  HttpServletResponse response,@RequestParam(value = "error", required = false, defaultValue = "false") String error,
-    		 ModelMap map) 
+    		 ModelMap map,@RequestParam(value = "txt", required = false, defaultValue = "false") String txt) 
      {
     	 System.out.println("in uploadImageN");
     	 if(logr.isDebugEnabled()){
@@ -101,6 +101,13 @@ public class ImageController {
     	 String msg=null;
     	 if(!(error.equalsIgnoreCase("false"))) {
     		 msg=error;
+    		  
+    	 }
+    	 
+    	 String upid="false";
+    	 if(!(txt.equalsIgnoreCase("false"))) {
+    		 upid=txt;
+    		 
     		  
     	 }
     	 
@@ -114,7 +121,8 @@ public class ImageController {
     	 SimpleUploadFile fileModel = new SimpleUploadFile();
  		 map.addAttribute("fileBucket", fileModel);
  		 map.addAttribute("Message", msg);
-
+ 		map.addAttribute("upid", upid);
+ 		
      	System.out.println("in upload image N GET");
      	
     
@@ -170,7 +178,8 @@ public class ImageController {
  				System.out.println("success");
  			   //set ? error = success and pass imageid to page for view
  				userImage.setImageid(imageid+"");
- 				 return "redirect:/uploadImageN?error=Successfully uploaded, /listdocs for seeing them";
+ 				System.out.println("-----------"+userImage.getImageid());
+ 				 return "redirect:/uploadImageN?error=Successfully uploaded&txt="+userImage.getImageid();
  				
  			}
  			else{
@@ -323,7 +332,7 @@ public class ImageController {
      
  }
     	 ModelAndView model = new ModelAndView("ImageError");
-    	 model.addObject("msg", "operation /listdocs returned 0 Images !!!!");
+    	 model.addObject("msg", "operation: searchImageByText returned 0 Images !!!!");
      	 
      	 return model;
     

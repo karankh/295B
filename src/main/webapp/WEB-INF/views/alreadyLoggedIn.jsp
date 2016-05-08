@@ -1,10 +1,8 @@
 <%@    taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib prefix="c" 
            uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html lang="en">
-
-
+<!DOCTYPE html lang ="en">
+<html>
 <head>
 
     <meta charset="utf-8">
@@ -16,10 +14,9 @@
     <meta name="description" content="">
 
     <meta name="author" content="">
-
-
-
+    
     <title>WebApp</title>
+    
 <style>
 .container {
   margin: 50px auto;
@@ -30,10 +27,9 @@
 </style>
 
 </head>
-
 <body background="${pageContext.request.contextPath}/img/bglogin1.jpg">
-	<div class = "container">
-    <form:form id="defaultPage" commandName="userpageDetails">
+<div class = "container">
+    <form:form id="alreadyLoggedIN" commandName="userpageDetails">
         <table>
          <tr>
                 <td colspan="3"><label>${Message}</label></td>
@@ -43,10 +39,10 @@
                 <td colspan="3" align="center"><font color="red"><form:errors /></font></td>
             </tr>
         </table>
-        <h2 style = "color: red">Requested page doesn't exist.</h2>
-         <a href='${pageContext.request.contextPath}/homepage' >App HomePage</a>
+       
+         <a href='${pageContext.request.contextPath}/homepage' >Web App HomePage</a>
+         <a href='${pageContext.request.contextPath}/logout' >LogOut</a>
     </form:form>
-	</div>
-	
+    </div>
 </body>
 </html>

@@ -1,7 +1,21 @@
 <%@    taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<title>WebApp SignUP</title>
+<meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="">
+
+    <meta name="author" content="">
+
+<title>SignIn</title>
+
+
 <script>
 function validateForm() 
 {
@@ -27,38 +41,37 @@ function validateForm()
     return true;
 }
 </script>
+
+<!-- Sign In CSS -->
+
+<link href="${pageContext.request.contextPath}/css/login.css" rel="stylesheet">
+    
 </head>
-<body>
-    <form:form id="login" name="myForm" action='${pageContext.request.contextPath}/login' onsubmit="return validateForm();" method="post"
+<body background="${pageContext.request.contextPath}/img/bglogin1.jpg">
+	<div class = "container">
+	<div class = "login">
+	<h1>SignIn to WebApp</h1>
+    <form:form id="login" name="myForm" class = "form-signin" action='${pageContext.request.contextPath}/login' onsubmit="return validateForm();" method="post"
         commandName="logindetails">
-        <table>
-            <tr>
-                <td colspan="3"><h3>Welcome To WebApp SignIN Page</h3></td>
-            </tr>
-         
-            <tr>
-                <td><label>Email ID</label></td>
-                <td><form:input path="email" ></form:input></td>
-                <td><font color="red"><form:errors path="email"></form:errors></font></td>
-            </tr>
-            <tr>
-                <td><label>Password</label></td>
-                <td><form:input path="passwrd" type="password" ></form:input></td>
-               
-            </tr>
-                <tr>
-                <td colspan="2" align="center"><input type="submit"
-                    value="LogIn" /></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td colspan="3" align="center"><font color="red"><form:errors /></font></td>
-            </tr>
-             <tr>
-                <td colspan="3"><label>${Message}</label></td>
-            </tr>
-        </table>
+        
+        <p><label>Email ID</label>
+        <form:input path="email" type = "text" value="" placeholder="Email (abc@xyz.com)"></form:input>
+                <font color="red"><form:errors path="email"></form:errors></font></p>
+        <p><label>Password</label>
+                <form:input path="passwrd" type="password" name = "password" value="" placeholder="Password"></form:input></p><br>
+               <div class = "buttonHolder">
+               <p class = "submit"> <input type="submit" name = "commit" value="LogIn" /></p>
+               </div>
+                 <font color="red"><form:errors /></font>
+         		<p> <label>${Message}</label><p>
+          
     </form:form>
-    <a href='${pageContext.request.contextPath}/homepage' >App HomePage</a>
+    </div>
+    <div class = "login-help">
+    <p><a href='${pageContext.request.contextPath}/homepage' >App HomePage</a></p>
+    </div>
+    </div>
+    
+  
 </body>
 </html>

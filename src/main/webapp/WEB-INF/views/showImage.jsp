@@ -4,8 +4,14 @@
 <html>
 <head>
 <title>WebApp</title>
+
+
+
+
 </head>
-<body>
+<body background="${pageContext.request.contextPath}/img/bglogin1.jpg">
+
+	
     <form:form id="faltu" method="post" action='${pageContext.request.contextPath}/userlist/' commandName="userImage">
        
   
@@ -13,7 +19,7 @@
            
     <tr>
      <td> <label>Your Image is:</label> </td>
-        <td> <img  src="data:image/jpeg;base64,${userImage}" height="342" width="442"/></td>
+        <td><img  src="data:image/jpeg;base64,${userImage}" height="342px" width="442px"/></td>
        
     </tr>
     <br />

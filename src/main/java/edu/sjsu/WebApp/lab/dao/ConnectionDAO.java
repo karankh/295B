@@ -22,17 +22,19 @@ public class ConnectionDAO
     {
         try
         {
-            String url = "jdbc:mysql://127.0.0.1:3306/";
-            String dbName ="cloudAppdb"; // here the name of Database.
+            String url = "jdbc:mysql://172.17.0.3:3306/"; // old - 127.0.0.1:3306 , 
+            // aws - cloud295bmysql.cw8vxxk4fprv.us-west-2.rds.amazonaws.com // docker - /172.17.0.3
+            String dbName ="cloudAppdb"; // here the name of Database. //local- cloudAppdb, aws - CloudAppdb
             String uname = "root"; //username
-            String pwd = "clouddb"; //password
+            String pwd = "123"; //password oldpswd = clouddb, docker - 123, aws - clouddb123
+            String autoReconnect = "?autoReconnect=true";
  
             //MySQL jdbc driver
             Class.forName("com.mysql.jdbc.Driver");
             try
             {
                 if(null==conn){
-                    conn = DriverManager.getConnection(url+dbName,uname,pwd);
+                    conn = DriverManager.getConnection(url+dbName+autoReconnect,uname,pwd);
                     System.out.println(" !!! got db conn !!! ");
                 }
             }

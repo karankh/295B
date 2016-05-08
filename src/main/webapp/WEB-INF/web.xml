@@ -10,6 +10,10 @@
     <servlet>
         <servlet-name>first-Front-Controller</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+          <init-param>
+        <param-name>throwExceptionIfNoHandlerFound</param-name>
+        <param-value>true</param-value>
+    </init-param>
          <multipart-config>
         <location>/tmp</location>
         <max-file-size>642880</max-file-size><!--5MB chnaged-->
@@ -21,6 +25,7 @@
     <servlet-mapping>
         <servlet-name>first-Front-Controller</servlet-name>
         <url-pattern>/</url-pattern>
+      
     </servlet-mapping>
  
    
@@ -33,7 +38,7 @@
   <url-pattern>/*</url-pattern> 
  </filter-mapping>
     
-    
+   
    
     <welcome-file-list>
         <welcome-file>homepage.jsp</welcome-file>

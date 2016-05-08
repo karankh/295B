@@ -20,6 +20,9 @@
 
     <!-- Custom CSS -->
     <link href='${pageContext.request.contextPath}/css/business-casual.css' rel="stylesheet">
+    <!-- Homepage CSS -->
+
+<link href="${pageContext.request.contextPath}/css/homepage.css" rel="stylesheet">
 
     <!-- Fonts -->
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
@@ -36,45 +39,7 @@
 
 <body>
 
-    <div class="brand">Image Web Application</div>
-    <!--div class="address-bar">3481 Melrose Place | Beverly Hills, CA 90210 | 123.456.7890</div -->
-
-    <!-- Navigation -->
-    <nav class="navbar navbar-default" role="navigation">
-        <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <!-- navbar-brand is hidden on larger screens, but visible when the menu is collapsed -->
-                <a class="navbar-brand" href="index.html">Business Casual</a>
-            </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <!--div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li>
-                        <a href="index.html">Home</a>
-                    </li>
-                    <li>
-                        <a href="about.html">About</a>
-                    </li>
-                    <li>
-                        <a href="blog.html">Blog</a>
-                    </li>
-                    <li>
-                        <a href="contact.html">Contact</a>
-                    </li>
-                </ul>
-            </div -->
-            <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container -->
-    </nav>
-
+	<div class="brand">Image Web Application</div>
     <div class="container">
 
         <div class="row">
@@ -109,57 +74,59 @@
                             <span class="icon-next"></span>
                         </a>
                     </div>
-                    <form:form id="homepage" name="homepage" action="homepage" onsubmit="return validateForm();" method="post"
+                    
+    <div class = "formcontainer">
+	<div class = "homepage">
+	
+        <form:form id="homepage" name="homepage" action="homepage" onsubmit="return validateForm();" method="post"
         commandName="homepageDetails">
         <c:set var="isUserlogin" scope="session" value="${homepageDetails.isUser}"/>
          <c:choose>
          
       <c:when test="${isUserlogin=='true'}">
-      <label>Hello,
-      <%= session.getAttribute("USERFIRSTNAME") %></label>
-      <b><a href='${pageContext.request.contextPath}/uploadImageN' >ImageUpload</a></b><br/>
-      <b><a href="${pageContext.request.contextPath}/logout">LogOut</a></b><br/>
-      <b><a href='${pageContext.request.contextPath}/userpage/<%= session.getAttribute("USERID") %>/?brief=true' >View Your Account</a></b><br/>
+      <p><label>Hello,
+      <%= session.getAttribute("USERFIRSTNAME") %></label><br/>
       
+      <b><a href='${pageContext.request.contextPath}/uploadImageN' >Upload Images</a></b>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <b><a href='${pageContext.request.contextPath}/userpage/<%= session.getAttribute("USERID") %>/?brief=true' >View Your Account</a></b>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <b><a href="${pageContext.request.contextPath}/logout" >LogOut</a></b>
+      </p>
       </c:when>
 
       <c:otherwise>
-     <label>Welcome Guest,</label>
-      <b><a href='${pageContext.request.contextPath}/signUp' >SignUp</a></b>
+     <p><label>Welcome Guest,</label>
+     <br/>
+      <b><a href='${pageContext.request.contextPath}/signUp' >SignUp</a></b> &nbsp;&nbsp;&nbsp;&nbsp;
       <b><a href='${pageContext.request.contextPath}/login' >SignIn</a></b>
-      <br />
+      <br /></p>
       </c:otherwise>
       </c:choose>
-        <table>
-            <tr>
-                <td colspan="3"><h3>Welcome To WebApp HomePage</h3></td>
-            </tr>
-           <tr>
-                <td><label>Search:</label></td>
-                <td><form:input path="searchText" type="text"></form:input></td>
-                <td><font color="red"><form:errors path="searchText"></form:errors></font></td>
-            </tr> 
-            <tr>
-                <td colspan="2" align="center"><input type="submit"
-                    value="SEARCH" /></td>
-                
-            </tr>
-            <tr>
-                <td colspan="3" align="center"><font color="red"><form:errors /></font></td>
-                 <td colspan="3"><label>${Message}</label></td>
-            </tr>
-        </table>
+       <p><h3>Explore WebApp</h3></div>
+         
+           
+              
+                <p><form:input path="searchText" class = "search" type="text" placeholder = "Type here to search images"></form:input></p>
+                <br/>
+            <div class = "buttonholder">
+            <p><input type="submit" class = "search"
+                    value="SEARCH"  /></p>
+            </div>   
+          
+              <p><label>${Message}</label></p>
+            
         
 
-    </form:form>
+    	</form:form>
     
-                </div>
+          </div>      
             </div>
         </div>
 
-        
-    </footer>
-
+      </div>  
+  
+</div>
     <!-- jQuery -->
     <script src='${pageContext.request.contextPath}/js/jquery.js'></script>
 
@@ -169,7 +136,7 @@
     <!-- Script to Activate the Carousel -->
     <script>
 	$('.carousel').carousel({
-        interval: 5000 //changes the speed
+        interval: 2000 //changes the speed
     })
      
     function validateForm() 
@@ -187,7 +154,11 @@
     return true;
 }
     </script>
+<!-- jQuery -->
+    <script src="js/jquery.js"></script>
 
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
 </body>
 
 </html>

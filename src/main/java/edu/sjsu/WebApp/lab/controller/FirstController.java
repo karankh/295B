@@ -340,7 +340,6 @@ public class FirstController {
 		if(logr.isDebugEnabled()){
             logr.debug("POST /userpage/{userId} update method is executed!"); }	
 		
-         ValidationUtils.rejectIfEmptyOrWhitespace(bindingResult,"firstname","firstname", "firstname not be empty");
          
          if (bindingResult.hasErrors())
          {
@@ -455,39 +454,7 @@ public class FirstController {
         	 
     }
     
-    /*
-     * This method deletes the record using DELETE on request from form. 
-     * chkkkkkkkkkkkkkkkkkkk check if user exists !!!!!!! TO DO
-     * */
-    @RequestMapping(value = "/userpage/{userId}",method = RequestMethod.POST,params="delete")
-    public String init123(@ModelAttribute("userpageDetails")UserPageModel userpageModel, BindingResult bindingResult, 
-            HttpServletRequest request,  HttpServletResponse response,@PathVariable("userId") String id,@RequestParam(value = "brief", required = false, defaultValue = "false") String jsoncheck){
-    
-    	System.out.println("in normal del");
-    	if(logr.isDebugEnabled()){
-            logr.debug("POST /userpage/{userId} Delete method is executed!"); }	
-		
-    	userpageModel.setId(id);
-    	userRecordService.isUserPresentById(userpageModel);
-     	if(!userpageModel.getIsUserPresent())
-     	{
-	    	 
-     		return "redirect:/signUp?error=User Not Present. Try SignUp First.";
-			
-	        }
-        if(userRecordService.deleteUser(userpageModel))
-        {
-     	  
-          userpageModel = new UserPageModel();
-     	  return "redirect:/signUp?error=Thanks, the record has been deleted, now signUp here again.";
-     	   
-     	   
-        }
-		return null;
-
-	
-        
-    }
+   
     
     
     /*
@@ -496,7 +463,7 @@ public class FirstController {
      * chkkkkkkkkkkkkkkkkk
      * */    
     @RequestMapping(value = "/userpage/{userId}",method = RequestMethod.DELETE)
-    public ModelAndView initD(@PathVariable("userId") String id){
+    public ModelAndView initD(@PathVariable("userId") String id,HttpServletResponse response){
     	if(logr.isDebugEnabled()){
             logr.debug("REST DELETE /userpage/{userId} delete method is executed!"); }	
 		
@@ -507,7 +474,7 @@ public class FirstController {
     	userpageModel = new UserPageModel();
        
     	userpageModel.setId(id);
-    	userRecordService.isUserPresentById(userpageModel);
+    	userpageModel=userRecordService.isUserPresentById(userpageModel);
      	if(!userpageModel.getIsUserPresent())
      	{
 	    	 
@@ -520,12 +487,26 @@ public class FirstController {
     	   
     	   try {
 				message = obk.writer().withDefaultPrettyPrinter().writeValueAsString("Deletion Done.");
+				httpSession = sessionService.getHttpSession();
+		          httpSession.removeAttribute("USERID");
+		      	  httpSession.removeAttribute("USERNAME");
+		  		  httpSession.removeAttribute("USERFIRSTNAME");
+		      	  httpSession.invalidate();
+		         
+		          userpageModel = new UserPageModel();
+		          response.setHeader(
+		      	        "Cache-Control",
+		      	        "no-cache, max-age=0, must-revalidate, no-store");
 				
 				
-				System.out.println(message);
 			} catch (Exception e) {
+				ModelAndView model = new ModelAndView("error");
 				
-				e.printStackTrace();
+	           return model; 
+				
+		        	
+		        	
+				
 			}
 			
 			ModelAndView model = new ModelAndView("jsonP");
@@ -535,8 +516,10 @@ public class FirstController {
     	   
     	   
        }
-
-       return null;
+       ModelAndView model = new ModelAndView("error");
+		
+       return model; 
+     
     }
     
   
@@ -550,5 +533,48 @@ public class FirstController {
     	
     	return "redirect:/homepage";
     }
+    
+    
+    
+    @RequestMapping(value = "/userpaged/{userId}",method = RequestMethod.GET)
+    public String init123d(@ModelAttribute("userpageDetails")UserPageModel userpageModel, BindingResult bindingResult, 
+            HttpServletRequest request,  HttpServletResponse response,@PathVariable("userId") String id,@RequestParam(value = "brief", required = false, defaultValue = "false") String jsoncheck){
+    
+    	
+    	if(logr.isDebugEnabled()){
+            logr.debug("POST /userpage/{userId} Delete method is executed!");
+            logr.debug("in super del");}	
+		
+    	userpageModel.setId(id);
+    	userpageModel = userRecordService.isUserPresentById(userpageModel);
+     	if(!(userpageModel.getIsUserPresent()))
+     	{
+	    	 
+     		return "redirect:/signUp?error=User Not Present. Try SignUp First.";
+			
+	        }
+        if(userRecordService.deleteUser(userpageModel))
+        {
+          httpSession = sessionService.getHttpSession();
+          httpSession.removeAttribute("USERID");
+      	  httpSession.removeAttribute("USERNAME");
+  		  httpSession.removeAttribute("USERFIRSTNAME");
+      	  httpSession.invalidate();
+         
+          userpageModel = new UserPageModel();
+          
+     	  return "redirect:/signUp?error=Thanks, the record has been deleted, now signUp here again.";
+     	   
+     	   
+        }
+        else{
+        	return "redirect:/userpage/"+userpageModel.getId()+"/?brief=true";
+        	}
+        
+
+	
+        
+    }
+    
 
 }
